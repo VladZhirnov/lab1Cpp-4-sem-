@@ -1,15 +1,15 @@
-cmake_minimum_required(VERSION 3.11)
+п»їcmake_minimum_required(VERSION 3.11)
 
 project(functions CXX)
 
 set(CMAKE_CXX_STANDARD 23)
 
-# Специфичные настройки для компилятора Visual Studio
+# РЎРїРµС†РёС„РёС‡РЅС‹Рµ РЅР°СЃС‚СЂРѕР№РєРё РґР»СЏ РєРѕРјРїРёР»СЏС‚РѕСЂР° Visual Studio
 if(MSVC)
-    # Генерируем статическую заглушку для динамических библиотек
+    # Р“РµРЅРµСЂРёСЂСѓРµРј СЃС‚Р°С‚РёС‡РµСЃРєСѓСЋ Р·Р°РіР»СѓС€РєСѓ РґР»СЏ РґРёРЅР°РјРёС‡РµСЃРєРёС… Р±РёР±Р»РёРѕС‚РµРє
     set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS true)
 
-    # Включаем высокий уровень предупреждений
+    # Р’РєР»СЋС‡Р°РµРј РІС‹СЃРѕРєРёР№ СѓСЂРѕРІРµРЅСЊ РїСЂРµРґСѓРїСЂРµР¶РґРµРЅРёР№
     if(CMAKE_CXX_FLAGS MATCHES "/W[0-4]")
         string(REGEX REPLACE "/W[0-4]" "/W4" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
     else()
@@ -17,10 +17,10 @@ if(MSVC)
     endif()
 endif()
 
-# Объявляем библиотеку
+# РћР±СЉСЏРІР»СЏРµРј Р±РёР±Р»РёРѕС‚РµРєСѓ
 add_library(functions SHARED "include/functions/header.h" "src/main.cc")
 target_include_directories(functions PUBLIC "include")
 
-# Объявляем исполняемый файл
+# РћР±СЉСЏРІР»СЏРµРј РёСЃРїРѕР»РЅСЏРµРјС‹Р№ С„Р°Р№Р»
 add_executable(main "src/main.cc")
 target_link_libraries(main functions)
