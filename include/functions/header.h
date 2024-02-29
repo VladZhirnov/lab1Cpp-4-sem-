@@ -124,7 +124,7 @@ bool Tree::insert_key(Node*& node, int key) {
 		node = new Node(key);
 		return true;
 	}
-	if (key < node->get_key()) {
+	if (key <= node->get_key()) {
 		return insert_key(node->get_left_true(), key);
 	}
 	else if (key > node->get_key()) {
@@ -307,4 +307,23 @@ double measure_insert_and_erase_time_vector(size_t num_elements) {
 	double avg_time_add = total_time_add / 1000.0;
 	double avg_time_remove = total_time_remove / 1000.0;
 	return (avg_time_add + avg_time_remove) / 2.0;
+}
+
+std::vector<int> create_vector_with_dublicates(std::vector<int> old_vector) {
+	Tree tree;
+	for (int val : old_vector) {
+		tree.insert(val);
+	}
+	std::vector<int> dublicates;
+	for (int val : old_vector) {
+		int count = 0;
+		while (tree.contains(val)) {
+			count++;
+			tree.erase(val);
+		}
+		if (count > 2 || count == 2) {
+			dublicates.push_back(val);
+		}
+	}
+	return dublicates;
 }
