@@ -104,7 +104,6 @@ void Tree::print_tree(const Node* root) {
 	std::cout << root->get_key() << " ";
 	print_tree(root->get_left());
 	print_tree(root->get_right());
-	
 }
 
 Tree& Tree::operator=(const Tree& other) {
@@ -193,7 +192,6 @@ bool Tree::delete_key(Node*& node, int key) {
 	}
 }
 
-
 size_t lcg() {
 	static size_t x = 0;
 	x = (1021 * x + 24631) % 116640;
@@ -205,7 +203,7 @@ double Tree::measure_fill_time(size_t num_elements) {
 	for (int attempt = 0; attempt < 100; ++attempt) {
 		clock_t start_time = clock();
 		for (size_t i = 0; i < num_elements; ++i) {
-			insert(lcg());
+			insert(lcg()); 
 		}
 		clock_t end_time = clock();
 		total_time += static_cast<double>(end_time - start_time) / CLOCKS_PER_SEC;
@@ -276,7 +274,7 @@ double measure_search_time_vector(size_t num_elements) {
 	for (int attempt = 0; attempt < 1000; ++attempt) {
 		int key_to_find = lcg();
 		clock_t start_time = clock();
-		bool found = std::find(vec.begin(), vec.end(), key_to_find) != vec.end();
+		auto found = std::find(vec.begin(), vec.end(), key_to_find);
 		clock_t end_time = clock();
 		total_time += static_cast<double>(end_time - start_time) / CLOCKS_PER_SEC;
 	}
@@ -291,13 +289,14 @@ double measure_insert_and_erase_time_vector(size_t num_elements) {
 	double total_time_add = 0.0;
 	double total_time_remove = 0.0;
 	for (int attempt = 0; attempt < 1000; ++attempt) {
-		int key_to_find = lcg();
+		int key_to_add = lcg();
 		clock_t start_time_add = clock();
-		vec.push_back(key_to_find);
+		vec.push_back(key_to_add);
 		clock_t end_time_add = clock();
 		total_time_add += static_cast<double>(end_time_add - start_time_add) / CLOCKS_PER_SEC;
+		int key_to_remove = lcg();
 		clock_t start_time_remove = clock();
-		auto it = std::find(vec.begin(), vec.end(), key_to_find);
+		auto it = std::find(vec.begin(), vec.end(), key_to_remove);
 		if (it != vec.end()) {
 			vec.erase(it);
 		}
